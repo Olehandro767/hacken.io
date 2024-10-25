@@ -1,0 +1,7 @@
+hacken:
+  application:
+    credentials:
+      grove-city-chain-prefix: ${GROVE_CITY_CHAIN_PREFIX:eth-mainnet}
+      grove-city-application-id: ${GROVE_CITY_APPLICATION_ID:e5fc637d}
+
+spring.application.name: task
