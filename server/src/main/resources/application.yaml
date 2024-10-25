@@ -5,3 +5,6 @@ hacken:
       grove-city-application-id: ${GROVE_CITY_APPLICATION_ID:e5fc637d}
 
 spring.application.name: task
+
+server:
+  port: 8080

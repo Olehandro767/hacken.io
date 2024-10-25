@@ -1,6 +1,6 @@
-package io.hacken.task.rest.v1;
+package io.hacken.task.rest.v1.controller.transaction;
 
-import io.hacken.task.service.Web3TransactionalListenerService;
+import io.hacken.task.rest.v1.service.transaction.Web3TransactionalListenerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,13 +13,13 @@ import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@RequestMapping(API_V1_PREFIX + "/transaction/behaviour")
-public class TransactionBehaviourRestController {
+@RequestMapping(API_V1_PREFIX + "/transaction/listener/control")
+public class TransactionListenerRestController {
 
     private final Web3TransactionalListenerService transactionalListenerService;
 
     @Autowired
-    public TransactionBehaviourRestController(Web3TransactionalListenerService transactionalListenerService) {
+    public TransactionListenerRestController(Web3TransactionalListenerService transactionalListenerService) {
         this.transactionalListenerService = transactionalListenerService;
     }
 
