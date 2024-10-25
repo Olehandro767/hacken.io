@@ -10,7 +10,19 @@ import { HttpRequestService } from "../http-request.service";
   styleUrl: "./table-page.component.css",
 })
 export class TablePageComponent {
+  public readonly availableOptions = [
+    { key: "to", value: 'Search by "TO"' },
+    { key: "from", value: 'Search by "FROM"' },
+    { key: "gas", value: 'Search by "Gas"' },
+    { key: "gasPrice", value: 'Search by "Gas Price"' },
+    { key: "transactionHash", value: 'Search by "Transaction Hash"' },
+    { key: "transactionMethod", value: 'Search by "Transaction Method"' },
+    { key: "date", value: 'Search by "Date"' },
+  ];
   public transactionsData: database_entity[] = [];
+  public simpleSearchType: string = "";
+  public isComplexSearch = false;
+  private page: number = 0;
 
   public constructor(
     private readonly _httpRequestService: HttpRequestService,

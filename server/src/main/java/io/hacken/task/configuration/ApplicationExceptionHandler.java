@@ -18,6 +18,7 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
         return badRequest().body("Something went wrong. Time at server " );
     }
 
+    @ExceptionHandler(FieldDoesNotExistException.class)
     public ResponseEntity<String> fieldDoesNotExistExceptionHandler(FieldDoesNotExistException exception) {
         log.error("field doesn't exist", exception);
         return badRequest().body("sql injection");

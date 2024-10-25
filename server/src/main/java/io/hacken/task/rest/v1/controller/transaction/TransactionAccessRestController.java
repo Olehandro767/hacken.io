@@ -33,8 +33,11 @@ public class TransactionAccessRestController {
     }
 
     @PostMapping("/read/{searchBy}/{value}")
-    public ResponseEntity<PageResponse<TransactionRecord>> read(@PathVariable String searchBy, @PathVariable String value) {
-        return ok().build();
+    public ResponseEntity<PageResponse<TransactionRecord>> read(@RequestParam int page,
+                                                                @PathVariable String searchBy,
+                                                                @PathVariable String value) {
+        var result = this.transactionAccessService.search(searchBy, value, page);
+        return ok(new PageResponse<>(this.transactionConverter.convert(result), page, result.getTotalPages()));
     }
 
     @PostMapping("/read")

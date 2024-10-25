@@ -1,3 +1,73 @@
 <div id="table-page-component">
-    <table></table>
+    @if (transactionsData.length > 0) {
+        <div>
+            <button>Simple search</button>
+            <button>Complex search</button>
+
+            @if (isComplexSearch) {
+                <div>
+                    <input placeholder="To" type="text" />
+                    <input placeholder="From" type="text" />
+                    <input placeholder="Gas" type="text" />
+                    <input placeholder="Gas Price" type="text" />
+                    <input placeholder="Transaction Hash" type="text" />
+                    <input placeholder="Transaction Method" type="text" />
+                    <input placeholder="Date" type="datetime-local" />
+                    <button>Search</button>
+                </div>
+            } @else {
+                <div>
+                    <select>
+                        @for (
+                            optionItem of availableOptions;
+                            track optionItem
+                        ) {
+                            <option></option>
+                        }
+                    </select>
+
+                    @if (simpleSearchType === "date") {
+                        <input placeholder="Date" type="datetime-local" />
+                        <button>Search</button>
+                    } @else {
+                        <input placeholder="Type..." type="text" />
+                        <button>Search</button>
+                    }
+                </div>
+            }
+        </div>
+        <table>
+            <tr>
+                <th>Transaction Hash</th>
+                <th>Transaction Method</th>
+                <th>Date</th>
+                <th>Block Number</th>
+                <th>Gas</th>
+                <th>Gas Price</th>
+                <th>From</th>
+                <th>To</th>
+            </tr>
+
+            @for (entity of transactionsData; track entity) {
+                <tr>
+                    <td>{{ entity.transactionHash }}</td>
+                    <td>{{ entity.transactionMethod }}</td>
+                    <td>{{ entity.date }}</td>
+                    <td>{{ entity.blockNumber }}</td>
+                    <td>{{ entity.gas }}</td>
+                    <td>{{ entity.gasPrice }}</td>
+                    <td>{{ entity.from }}</td>
+                    <td>{{ entity.to }}</td>
+                </tr>
+            }
+        </table>
+        <div>
+            <button>Previous page</button>
+            <button>Next page</button>
+        </div>
+    } @else {
+        <div class="empty-table">
+            <h1>The table is empty.</h1>
+        </div>
+    }
 </div>

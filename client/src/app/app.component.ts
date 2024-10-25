@@ -27,6 +27,8 @@ export class AppComponent implements OnInit {
     throw new Error("splash-screen not found");
   }
 
+  private handleErrors(errors: any): void {}
+
   public ngOnInit(): void {
     this.findSplashScreen().then((element) => {
       element.classList.add("close-splash-screen");
@@ -40,9 +42,9 @@ export class AppComponent implements OnInit {
     this.toggle
       ? this._httpRequestService
           .toggleToStartReceivingTransactions()
-          .subscribe()
-      : this._httpRequestService
-          .toggleToStopReceivingTransactions()
-          .subscribe();
+          .subscribe({ error: this.handleErrors })
+      : this._httpRequestService.toggleToStopReceivingTransactions().subscribe({
+          error: this.handleErrors,
+        });
   }
 }

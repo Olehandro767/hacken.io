@@ -22,22 +22,22 @@ public class TransactionSearchJsonConverter {
     public SearchOptionI[] convertToOptions(TransactionSearchJson json) {
         var options = new ArrayList<SearchOptionI<?>>();
 
-        if (json.getTo() != null) {
+        if (json.getTo() != null && !json.getTo().isBlank()) {
             options.add(findByTo(json.getTo()));
         }
-        if (json.getFrom() != null) {
+        if (json.getFrom() != null && !json.getFrom().isBlank()) {
             options.add(findByFrom(json.getFrom()));
         }
-        if (json.getGas() != null) {
+        if (json.getGas() != null && !json.getGas().isBlank()) {
             options.add(findByGas(json.getGas()));
         }
-        if (json.getGasPrice() != null) {
+        if (json.getGasPrice() != null && !json.getGasPrice().isBlank()) {
             options.add(findByGasPrice(json.getGasPrice()));
         }
-        if (json.getTransactionHash() != null) {
+        if (json.getTransactionHash() != null && !json.getTransactionHash().isBlank()) {
             options.add(findByTransactionHash(json.getTransactionHash()));
         }
-        if (json.getTransactionMethod() != null) {
+        if (json.getTransactionMethod() != null && !json.getTransactionMethod().isBlank()) {
             options.add(findByTransactionMethod(json.getTransactionMethod()));
         }
         if (json.getDate() != null) {
