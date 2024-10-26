@@ -18,7 +18,6 @@ public class TransactionSearchJson {
     private String gas;
     private String gasPrice;
     private String transactionHash;
-    private String transactionMethod;
     private String date;
 
     public LocalDateTime getDate() {

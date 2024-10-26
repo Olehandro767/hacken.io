@@ -14,6 +14,8 @@ import static io.hacken.task.configuration.DefaultValues.DEFAULT_PAGE_LENGTH;
 import static io.hacken.task.database.dao.transaction.search.AcceptedTransactionComplexSearch.*;
 import static java.time.LocalDateTime.parse;
 import static java.time.format.DateTimeFormatter.ISO_DATE_TIME;
+import static org.springframework.data.domain.Sort.Direction.DESC;
+import static org.springframework.data.domain.Sort.by;
 
 @Service
 public class TransactionAccessService {
@@ -29,18 +31,17 @@ public class TransactionAccessService {
     }
 
     public Page<AcceptedTransaction> readTransactions(int page) {
-        return this.acceptedTransactionDao.findAll(PageRequest.of(page, DEFAULT_PAGE_LENGTH));
+        return this.acceptedTransactionDao.findAll(PageRequest.of(page, DEFAULT_PAGE_LENGTH, by(DESC, "id")));
     }
 
     public Page<AcceptedTransaction> search(String searchBy, String value, int page) {
-        var pagination = PageRequest.of(page, DEFAULT_PAGE_LENGTH);
+        var pagination = PageRequest.of(page, DEFAULT_PAGE_LENGTH, by(DESC, "id"));
         return switch (searchBy) {
             case SEARCH_BY_TO -> this.acceptedTransactionDao.findByTo(value, pagination);
             case SEARCH_BY_FROM -> this.acceptedTransactionDao.findByFrom(value, pagination);
             case SEARCH_BY_GAS -> this.acceptedTransactionDao.findByGas(value, pagination);
             case SEARCH_BY_GAS_PRICE -> this.acceptedTransactionDao.findByGasPrice(value, pagination);
             case SEARCH_BY_TRANSACTION_HASH -> this.acceptedTransactionDao.findByTransactionHash(value, pagination);
-            case SEARCH_BY_TRANSACTION_METHOD -> this.acceptedTransactionDao.findByTransactionMethod(value, pagination);
             case SEARCH_BY_DATE -> this.acceptedTransactionDao.findByDate(parse(value, ISO_DATE_TIME), pagination);
             default -> throw new FieldDoesNotExistException('"' + searchBy + "\" does not exists");
         };

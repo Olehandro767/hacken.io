@@ -1,6 +1,6 @@
 <main>
     <div class="checkbox-wrapper">
-        <h3>Enable Receiving Transactions</h3>
+        <b>Enable Receiving Transactions</b>
         <input
             id="cbx"
             type="checkbox"
@@ -19,11 +19,11 @@
     </div>
 
     @if (toggle) {
-        <div id="wait-implementation-grid">
+        <div id="wait-implementation">
             <input
                 class="wait-impl-input"
                 type="number"
-                placeholder="Value for waiting"
+                placeholder="Value for waiting (Sec)"
             />
             <button class="wait-impl-btn">Trottle</button>
             <button class="wait-impl-btn">Just wait</button>

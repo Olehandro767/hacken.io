@@ -37,27 +37,23 @@ public class AcceptedTransactionDao extends AbstractDaoImpl<AcceptedTransaction>
     }
 
     public Page<AcceptedTransaction> findByTo(String value, Pageable pageable) {
-        return this.repository.findBySentTo(value, pageable);
+        return this.repository.findBySentToContaining(value, pageable);
     }
 
     public Page<AcceptedTransaction> findByFrom(String value, Pageable pageable) {
-        return this.repository.findBySentFrom(value, pageable);
+        return this.repository.findBySentFromContaining(value, pageable);
     }
 
     public Page<AcceptedTransaction> findByGas(String value, Pageable pageable) {
-        return this.repository.findByGas(value, pageable);
+        return this.repository.findByGasContaining(value, pageable);
     }
 
     public Page<AcceptedTransaction> findByGasPrice(String value, Pageable pageable) {
-        return this.repository.findByGasPrice(value, pageable);
+        return this.repository.findByGasPriceContaining(value, pageable);
     }
 
     public Page<AcceptedTransaction> findByTransactionHash(String value, Pageable pageable) {
-        return this.repository.findByTransactionHash(value, pageable);
-    }
-
-    public Page<AcceptedTransaction> findByTransactionMethod(String value, Pageable pageable) {
-        return this.repository.findByTransactionMethod(value, pageable);
+        return this.repository.findByTransactionHashContaining(value, pageable);
     }
 
     public Page<AcceptedTransaction> findByDate(LocalDateTime value, Pageable pageable) {
@@ -66,9 +62,9 @@ public class AcceptedTransactionDao extends AbstractDaoImpl<AcceptedTransaction>
 
     public Page<AcceptedTransaction> complexSearch(AcceptedTransactionComplexSearch search) {
         var params = new Object[]{search.to(), search.from(), search.gas(), search.gasPrice(),
-                search.transactionHash(), search.transactionMethod(), search.date()};
+                search.transactionHash(), search.date()};
         var fields = new String[]{"table.sentTo LIKE ?0 ", "table.sentFrom  LIKE ?1 ", "table.gas LIKE ?2 ", "table.gasPrice LIKE ?3 ",
-                "table.transactionHash LIKE ?4 ", "table.transactionMethod LIKE ?5 ", "table.date BETWEEN ?6 AND ?7 "};
+                "table.transactionHash LIKE ?4 ", "table.date BETWEEN ?5 AND ?6 "};
         var paginationJpqlBuilder = new StringBuilder("SELECT count(table) FROM AcceptedTransaction table WHERE");
         var jpqlBuilder = new StringBuilder("SELECT table FROM AcceptedTransaction table WHERE ");
 
@@ -86,7 +82,7 @@ public class AcceptedTransactionDao extends AbstractDaoImpl<AcceptedTransaction>
             var param = params[i];
 
             if (param != null) {
-                if (i == 6) {
+                if (i == 5) {
                     var localDateNow = LocalDateTime.now();
                     var castedParam = (LocalDateTime) param;
                     var now = Calendar.getInstance();

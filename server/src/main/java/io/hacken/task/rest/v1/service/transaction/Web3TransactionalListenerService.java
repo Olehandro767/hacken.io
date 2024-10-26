@@ -37,6 +37,7 @@ public class Web3TransactionalListenerService {
 
     private void checkConnection() throws IOException {
         this.web3.web3ClientVersion().send();
+        log.info("Web3 connected!!!");
     }
 
     public boolean isListenerStillListening() {
@@ -46,16 +47,22 @@ public class Web3TransactionalListenerService {
     public synchronized boolean deployTransactionListener() {
         if (!this.isListenerStillListening()) {
             this.transactionListenerContext = this.web3.pendingTransactionFlowable()
-                    .subscribe(transaction -> this.acceptedTransactionDao.save(AcceptedTransaction.builder()
-                            .transactionHash(transaction.getHash())
-                            .transactionMethod(transaction.getRaw()) // TODO should be a method
-                            .blockNumber(transaction.getBlockNumberRaw())
-                            .sentFrom(transaction.getFrom())
-                            .sentTo(transaction.getTo())
-                            .gas(transaction.getGasRaw())
-                            .gasPrice(transaction.getGasPriceRaw())
-                            .date(LocalDateTime.now())
-                            .build()));
+                    .subscribe(
+                            transaction -> this.acceptedTransactionDao.save(AcceptedTransaction.builder()
+                                    .transactionHash(transaction.getHash())
+                                    .blockNumber(transaction.getBlockNumberRaw())
+                                    .sentFrom(transaction.getFrom())
+                                    .sentTo(transaction.getTo())
+                                    .gas(transaction.getGasRaw())
+                                    .gasPrice(transaction.getGasPriceRaw())
+                                    .date(LocalDateTime.now())
+                                    .build()),
+                            error -> {
+                                log.error("Transaction issues: ", error);
+                                this.stopTransactionListener();
+                                this.deployTransactionListener();
+                            }
+                    );
 
             log.info("deployTransactionListener: Listener started");
             return true;

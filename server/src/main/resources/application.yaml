@@ -14,8 +14,9 @@ spring:
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:15432}/${POSTGRES_DB_NAME:admin}
-    username: 'admin'
-    password: 'admin'
+    username: ${POSTGRES_DB_USER:admin}
+    password: ${POSTGRES_DB_PASSWORD:admin}
 
 server:
   port: 8080
+  trusted-urls: "http://localhost:4200, http://localhost:8080"

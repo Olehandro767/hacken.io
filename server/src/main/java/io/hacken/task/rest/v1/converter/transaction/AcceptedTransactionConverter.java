@@ -14,7 +14,7 @@ public class AcceptedTransactionConverter {
 
     public TransactionRecord convert(AcceptedTransaction entity) {
         return new TransactionRecord(entity.getId(), entity.getSentTo(), entity.getSentFrom(), entity.getGas(),
-                entity.getGasPrice(), entity.getBlockNumber(), entity.getTransactionHash(), entity.getTransactionMethod(),
+                entity.getGasPrice(), entity.getBlockNumber(), entity.getTransactionHash(),
                 ofPattern("yyyy-MM-dd HH:mm").format(entity.getDate()));
     }
 

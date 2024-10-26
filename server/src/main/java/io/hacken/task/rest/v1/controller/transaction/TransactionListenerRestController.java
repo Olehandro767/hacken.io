@@ -33,8 +33,7 @@ public class TransactionListenerRestController {
 
     @PutMapping("/stop")
     public ResponseEntity<String> stop() {
-        this.transactionalListenerService.stopTransactionListener();
-        return this.transactionalListenerService.deployTransactionListener()
+        return this.transactionalListenerService.stopTransactionListener()
                 ? ok().body(OK.getReasonPhrase()) : badRequest().body("Already stopped");
     }
 

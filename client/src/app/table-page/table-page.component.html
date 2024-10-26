@@ -1,9 +1,13 @@
 <div id="table-page-component">
     @if (transactionsData.length > 0) {
-        <div>
-            <button>Simple search</button>
-            <button>Complex search</button>
-            <button>Updatev table</button>
+        <div id="search-panel">
+            <button (click)="changeSearchType(SEARCH_STATE.SIMPLE_SEARCH)">
+                Simple search
+            </button>
+            <button (click)="changeSearchType(SEARCH_STATE.COMPLEX_SEARCH)">
+                Complex search
+            </button>
+            <button (click)="updateTable()">Updatev table</button>
 
             @if (searchState === SEARCH_STATE.COMPLEX_SEARCH) {
                 <div>
@@ -33,11 +37,6 @@
                         [(ngModel)]="complexSearchContext.transactionHash"
                     />
                     <input
-                        placeholder="Transaction Method"
-                        type="text"
-                        [(ngModel)]="complexSearchContext.transactionMethod"
-                    />
-                    <input
                         placeholder="Date"
                         type="datetime-local"
                         [(ngModel)]="complexSearchContext.date"
@@ -46,69 +45,77 @@
                 </div>
             } @else if (searchState === SEARCH_STATE.SIMPLE_SEARCH) {
                 <div>
-                    <select (change)="simpleSearchToggle($event.target)">
+                    <select
+                        [(ngModel)]="simpleSearchContext.searchBy"
+                        (change)="simpleSearchToggle($event.target)"
+                    >
                         @for (
                             optionItem of availableOptions;
                             track optionItem
                         ) {
-                            <option></option>
+                            <option value="{{ optionItem.key }}">
+                                {{ optionItem.value }}
+                            </option>
                         }
                     </select>
 
-                    @if (simpleSearchContext.typeValue === "date") {
+                    @if (simpleSearchContext.searchBy === "date") {
                         <input
                             placeholder="Date"
                             type="datetime-local"
+                            value="{{ simpleSearchContext.dateValue }}"
                             [(ngModel)]="simpleSearchContext.dateValue"
                         />
-                        <button>Search</button>
+                        <button (click)="clickOnSimpleSearch()">Search</button>
                     } @else {
                         <input
                             placeholder="Type..."
                             type="text"
+                            value="{{ simpleSearchContext.value }}"
                             [(ngModel)]="simpleSearchContext.value"
                         />
-                        <button>Search</button>
+                        <button (click)="clickOnSimpleSearch()">Search</button>
                     }
                 </div>
             }
         </div>
-        <table>
-            <tr>
-                <th>Transaction Hash</th>
-                <th>Transaction Method</th>
-                <th>Date</th>
-                <th>Block Number</th>
-                <th>Gas</th>
-                <th>Gas Price</th>
-                <th>From</th>
-                <th>To</th>
-            </tr>
-
-            @for (entity of transactionsData; track entity) {
+        <table id="data-table">
+            <thead>
                 <tr>
-                    <td>{{ entity.transactionHash }}</td>
-                    <td>{{ entity.transactionMethod }}</td>
-                    <td>{{ entity.date }}</td>
-                    <td>{{ entity.blockNumber }}</td>
-                    <td>{{ entity.gas }}</td>
-                    <td>{{ entity.gasPrice }}</td>
-                    <td>{{ entity.from }}</td>
-                    <td>{{ entity.to }}</td>
+                    <th>Transaction Hash</th>
+                    <th>Date</th>
+                    <th>Block Number</th>
+                    <th>Gas</th>
+                    <th>Gas Price</th>
+                    <th>From</th>
+                    <th>To</th>
                 </tr>
-            }
+            </thead>
+            <tbody>
+                @for (entity of transactionsData; track entity) {
+                    <tr>
+                        <td>{{ entity.transactionHash }}</td>
+                        <td>{{ entity.date }}</td>
+                        <td>{{ entity.blockNumber }}</td>
+                        <td>{{ entity.gas }}</td>
+                        <td>{{ entity.gasPrice }}</td>
+                        <td>{{ entity.from }}</td>
+                        <td>{{ entity.to }}</td>
+                    </tr>
+                }
+            </tbody>
         </table>
-        <div>
+        <div id="pagination-section">
             @if (showPreviousPageButton) {
-                <button>Previous page</button>
+                <button (click)="clickOnPreviousPage()">Previous page</button>
             }
             @if (showNextPageButton) {
-                <button>Next page</button>
+                <button (click)="clickOnNextPage()">Next page</button>
             }
         </div>
     } @else {
         <div class="empty-table">
-            <h1>The table is empty.</h1>
+            <h1>The table is empty</h1>
         </div>
     }
 </div>

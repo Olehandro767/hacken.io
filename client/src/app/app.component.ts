@@ -27,8 +27,12 @@ export class AppComponent implements OnInit {
     throw new Error("splash-screen not found");
   }
 
-  private handleErrors(errors: any): void {
-    console.log(errors);
+  private handleErrors(error: any): void {
+    if (!error.status || error.status >= 400) {
+      alert("Error: " + error.message);
+    }
+
+    console.log(error);
   }
 
   public ngOnInit(): void {
@@ -50,9 +54,23 @@ export class AppComponent implements OnInit {
     this.toggle
       ? this._httpRequestService
           .toggleToStartReceivingTransactions()
-          .subscribe({ error: this.handleErrors })
+          .subscribe({
+            error: (error) => {
+              this.handleErrors(error);
+
+              if (!error.status || error.status >= 400) {
+                this.toggle = !this.toggle;
+              }
+            },
+          })
       : this._httpRequestService.toggleToStopReceivingTransactions().subscribe({
-          error: this.handleErrors,
+          error: (error) => {
+            this.handleErrors(error);
+
+            if (!error.status || error.status >= 400) {
+              this.toggle = !this.toggle;
+            }
+          },
         });
   }
 }

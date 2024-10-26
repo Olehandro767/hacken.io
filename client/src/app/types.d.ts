@@ -6,7 +6,6 @@ export type database_entity = {
   gasPrice: string;
   blockNumber: string;
   transactionHash: string;
-  transactionMethod: string;
   date: string;
 };
 
@@ -22,13 +21,12 @@ export type simple_search = {
 
 export type complex_search = {
   page: number;
-  to: string;
-  from: string;
-  gas: string;
-  gasPrice: string;
-  transactionHash: string;
-  transactionMethod: string;
-  date: string;
+  to: string?;
+  from: string?;
+  gas: string?;
+  gasPrice: string?;
+  transactionHash: string?;
+  date: string?;
 };
 
 export type page<T> = {

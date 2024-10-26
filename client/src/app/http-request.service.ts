@@ -25,7 +25,7 @@ export class HttpRequestService {
 
   public toggleToStartReceivingTransactions(): Observable<Object> {
     return this._http.put(
-      `${this.HOST_PREFIX}/api/v1/transaction/behaviour/start"`,
+      `${this.HOST_PREFIX}/api/v1/transaction/listener/control/start`,
       this.emptyBody(),
       {
         headers: {},
@@ -35,7 +35,7 @@ export class HttpRequestService {
 
   public toggleToStopReceivingTransactions(): Observable<Object> {
     return this._http.put(
-      `${this.HOST_PREFIX}/api/v1/transaction/behaviour/stop`,
+      `${this.HOST_PREFIX}/api/v1/transaction/listener/control/stop`,
       this.emptyBody(),
       {
         headers: {},
@@ -45,7 +45,7 @@ export class HttpRequestService {
 
   public checkReceivingTransactionsStatus(): Observable<transaction_listener_state> {
     return this._http.get<transaction_listener_state>(
-      `${this.HOST_PREFIX}/api/v1/transaction/behaviour/read/state`,
+      `${this.HOST_PREFIX}/api/v1/transaction/listener/control/read/state`,
       {
         headers: {},
       },
@@ -65,8 +65,12 @@ export class HttpRequestService {
     args: simple_search,
   ): Observable<page<database_entity>> {
     return this._http.post<page<database_entity>>(
-      `${this.HOST_PREFIX}/api/v1/transaction/access/read/${args.searchBy}/${args.value}?page=${args.page}`,
-      this.emptyBody(),
+      `${this.HOST_PREFIX}/api/v1/transaction/access/read/simply`,
+      {
+        searchBy: args.searchBy,
+        value: args.value,
+        page: args.page,
+      },
       {
         headers: {},
       },

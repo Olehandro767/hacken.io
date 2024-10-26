@@ -3,6 +3,8 @@ command_exists () {
     type "$1" &> /dev/null ;
 }
 
+clear
+
 if !(docker compose -f docker/local/docker-compose.yml pull); then
 	echo "STARTING THE DOCKER..."
 	sudo systemctl start docker.service

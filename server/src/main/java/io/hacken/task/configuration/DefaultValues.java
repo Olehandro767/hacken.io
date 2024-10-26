@@ -6,5 +6,5 @@ public final class DefaultValues {
         throw new IllegalArgumentException("Private constructor");
     }
 
-    public static final int DEFAULT_PAGE_LENGTH = 15;
+    public static final int DEFAULT_PAGE_LENGTH = 30;
 }

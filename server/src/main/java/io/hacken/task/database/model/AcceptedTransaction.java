@@ -23,26 +23,23 @@ public class AcceptedTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @JdbcTypeCode(LONGVARCHAR)
-    @Column(name = "sent_to", nullable = false)
+    @Column(name = "sent_to")
     private String sentTo;
     @JdbcTypeCode(LONGVARCHAR)
-    @Column(name = "sent_from", nullable = false)
+    @Column(name = "sent_from")
     private String sentFrom;
     @JdbcTypeCode(LONGVARCHAR)
-    @Column(name = "gas", nullable = false)
+    @Column(name = "gas")
     private String gas;
     @JdbcTypeCode(LONGVARCHAR)
-    @Column(name = "gas_price", nullable = false)
+    @Column(name = "gas_price")
     private String gasPrice;
     @JdbcTypeCode(LONGVARCHAR)
-    @Column(name = "block_number", nullable = false)
+    @Column(name = "block_number")
     private String blockNumber;
     @JdbcTypeCode(LONGVARCHAR)
     @Column(name = "transaction_hash", nullable = false)
     private String transactionHash;
-    @JdbcTypeCode(LONGVARCHAR)
-    @Column(name = "transaction_method", nullable = false)
-    private String transactionMethod;
     @Column(name = "date", nullable = false)
     private LocalDateTime date;
 }

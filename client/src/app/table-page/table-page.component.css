@@ -1,3 +1,36 @@
 .empty-table {
     text-align: center;
 }
+
+#data-table {
+    text-align: center;
+    margin: 0px auto;
+}
+
+#data-table td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+#search-panel {
+    text-align: center;
+}
+
+#search-panel * {
+    margin-left: 5px;
+}
+
+#pagination-section {
+    text-align: center;
+}
+
+#pagination-section * {
+    margin-left: 5px;
+}
+
+#table-page-component button {
+    border-width: 0px;
+    height: 25px;
+}

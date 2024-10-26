@@ -9,17 +9,15 @@ import java.time.LocalDateTime;
 
 public interface AcceptedTransactionRepositoryI extends JpaRepository<AcceptedTransaction, Long> {
 
-    Page<AcceptedTransaction> findBySentTo(String value, Pageable pageable);
+    Page<AcceptedTransaction> findBySentToContaining(String value, Pageable pageable);
 
-    Page<AcceptedTransaction> findBySentFrom(String value, Pageable pageable);
+    Page<AcceptedTransaction> findBySentFromContaining(String value, Pageable pageable);
 
-    Page<AcceptedTransaction> findByGas(String value, Pageable pageable);
+    Page<AcceptedTransaction> findByGasContaining(String value, Pageable pageable);
 
-    Page<AcceptedTransaction> findByGasPrice(String value, Pageable pageable);
+    Page<AcceptedTransaction> findByGasPriceContaining(String value, Pageable pageable);
 
-    Page<AcceptedTransaction> findByTransactionHash(String value, Pageable pageable);
-
-    Page<AcceptedTransaction> findByTransactionMethod(String value, Pageable pageable);
+    Page<AcceptedTransaction> findByTransactionHashContaining(String value, Pageable pageable);
 
     Page<AcceptedTransaction> findByDate(LocalDateTime value, Pageable pageable);
 }

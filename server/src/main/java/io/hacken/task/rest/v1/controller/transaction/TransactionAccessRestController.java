@@ -2,6 +2,7 @@ package io.hacken.task.rest.v1.controller.transaction;
 
 import io.hacken.task.rest.v1.converter.transaction.AcceptedTransactionConverter;
 import io.hacken.task.rest.v1.dto.request.transaction.TransactionSearchJson;
+import io.hacken.task.rest.v1.dto.request.transaction.TransactionSimpleSearchJson;
 import io.hacken.task.rest.v1.dto.response.PageResponse;
 import io.hacken.task.rest.v1.dto.response.transaction.TransactionRecord;
 import io.hacken.task.rest.v1.service.transaction.TransactionAccessService;
@@ -32,12 +33,10 @@ public class TransactionAccessRestController {
         return ok(new PageResponse<>(this.transactionConverter.convert(result), page, result.getTotalPages()));
     }
 
-    @PostMapping("/read/{searchBy}/{value}/search")
-    public ResponseEntity<PageResponse<TransactionRecord>> read(@RequestParam int page,
-                                                                @PathVariable String searchBy,
-                                                                @PathVariable String value) {
-        var result = this.transactionAccessService.search(searchBy, value, page);
-        return ok(new PageResponse<>(this.transactionConverter.convert(result), page, result.getTotalPages()));
+    @PostMapping("/read/simply")
+    public ResponseEntity<PageResponse<TransactionRecord>> read(@RequestBody TransactionSimpleSearchJson json) {
+        var result = this.transactionAccessService.search(json.getSearchBy(), json.getValue(), json.getPage());
+        return ok(new PageResponse<>(this.transactionConverter.convert(result), json.getPage(), result.getTotalPages()));
     }
 
     @PostMapping("/read")

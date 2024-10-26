@@ -5,14 +5,13 @@ import io.hacken.task.database.dao.common.SearchOptionI;
 import java.time.LocalDateTime;
 
 public record AcceptedTransactionComplexSearch(int page, String to, String from, String gas, String gasPrice,
-                                               String transactionHash, String transactionMethod, LocalDateTime date) {
+                                               String transactionHash, LocalDateTime date) {
 
     public static final String SEARCH_BY_TO = "to";
     public static final String SEARCH_BY_FROM = "from";
     public static final String SEARCH_BY_GAS = "gas";
     public static final String SEARCH_BY_GAS_PRICE = "gasPrice";
     public static final String SEARCH_BY_TRANSACTION_HASH = "transactionHash";
-    public static final String SEARCH_BY_TRANSACTION_METHOD = "transactionMethod";
     public static final String SEARCH_BY_DATE = "date";
 
     public static AcceptedTransactionComplexSearch prepareComplexSearch(int page, SearchOptionI<?>... options) {
@@ -21,7 +20,6 @@ public record AcceptedTransactionComplexSearch(int page, String to, String from,
         String gas = null;
         String gasPrice = null;
         String transactionHash = null;
-        String transactionMethod = null;
         LocalDateTime date = null;
 
         for (SearchOptionI<?> option : options) {
@@ -31,7 +29,6 @@ public record AcceptedTransactionComplexSearch(int page, String to, String from,
                 case SEARCH_BY_GAS -> gas = option.getStringValue();
                 case SEARCH_BY_GAS_PRICE -> gasPrice = option.getStringValue();
                 case SEARCH_BY_TRANSACTION_HASH -> transactionHash = option.getStringValue();
-                case SEARCH_BY_TRANSACTION_METHOD -> transactionMethod = option.getStringValue();
                 case SEARCH_BY_DATE -> date = option.getValue(LocalDateTime.class)
                         .orElseThrow(() -> new IllegalArgumentException("illegal argument"));
                 default -> throw new IllegalArgumentException("illegal argument");
@@ -39,6 +36,6 @@ public record AcceptedTransactionComplexSearch(int page, String to, String from,
         }
 
         return new AcceptedTransactionComplexSearch(page, to, from, gas, gasPrice,
-                transactionHash, transactionMethod, date);
+                transactionHash, date);
     }
 }
