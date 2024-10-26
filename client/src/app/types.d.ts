@@ -10,6 +10,10 @@ export type database_entity = {
   date: string;
 };
 
+export type transaction_listener_state = {
+  enabled: boolean;
+};
+
 export type simple_search = {
   searchBy: string;
   value: string;

@@ -27,17 +27,25 @@ export class AppComponent implements OnInit {
     throw new Error("splash-screen not found");
   }
 
-  private handleErrors(errors: any): void {}
+  private handleErrors(errors: any): void {
+    console.log(errors);
+  }
 
   public ngOnInit(): void {
-    this.findSplashScreen().then((element) => {
-      element.classList.add("close-splash-screen");
-      setTimeout(() => element.remove(), 510);
+    this._httpRequestService.checkReceivingTransactionsStatus().subscribe({
+      next: (result) => {
+        this.toggle = result.enabled;
+        this.findSplashScreen().then((element) => {
+          element.classList.add("close-splash-screen");
+          setTimeout(() => element.remove(), 510);
+        });
+      },
+      error: this.handleErrors,
     });
   }
 
-  public onToggleChange(checkbox: any): void {
-    this.toggle = checkbox.checked;
+  public onToggleChange(target: any): void {
+    this.toggle = target.checked;
 
     this.toggle
       ? this._httpRequestService

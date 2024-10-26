@@ -4,7 +4,7 @@ import io.hacken.task.database.dao.transaction.AcceptedTransactionDao;
 import io.hacken.task.database.model.AcceptedTransaction;
 import io.hacken.task.exception.FieldDoesNotExistException;
 import io.hacken.task.rest.v1.converter.transaction.TransactionSearchJsonConverter;
-import io.hacken.task.rest.v1.dto.request.TransactionSearchJson;
+import io.hacken.task.rest.v1.dto.request.transaction.TransactionSearchJson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -3,21 +3,50 @@
         <div>
             <button>Simple search</button>
             <button>Complex search</button>
+            <button>Updatev table</button>
 
-            @if (isComplexSearch) {
+            @if (searchState === SEARCH_STATE.COMPLEX_SEARCH) {
                 <div>
-                    <input placeholder="To" type="text" />
-                    <input placeholder="From" type="text" />
-                    <input placeholder="Gas" type="text" />
-                    <input placeholder="Gas Price" type="text" />
-                    <input placeholder="Transaction Hash" type="text" />
-                    <input placeholder="Transaction Method" type="text" />
-                    <input placeholder="Date" type="datetime-local" />
-                    <button>Search</button>
+                    <input
+                        placeholder="To"
+                        type="text"
+                        [(ngModel)]="complexSearchContext.toValue"
+                    />
+                    <input
+                        placeholder="From"
+                        type="text"
+                        [(ngModel)]="complexSearchContext.fromValue"
+                    />
+                    <input
+                        placeholder="Gas"
+                        type="text"
+                        [(ngModel)]="complexSearchContext.gas"
+                    />
+                    <input
+                        placeholder="Gas Price"
+                        type="text"
+                        [(ngModel)]="complexSearchContext.gasPrice"
+                    />
+                    <input
+                        placeholder="Transaction Hash"
+                        type="text"
+                        [(ngModel)]="complexSearchContext.transactionHash"
+                    />
+                    <input
+                        placeholder="Transaction Method"
+                        type="text"
+                        [(ngModel)]="complexSearchContext.transactionMethod"
+                    />
+                    <input
+                        placeholder="Date"
+                        type="datetime-local"
+                        [(ngModel)]="complexSearchContext.date"
+                    />
+                    <button (click)="clickOnComplexSearch()">Search</button>
                 </div>
-            } @else {
+            } @else if (searchState === SEARCH_STATE.SIMPLE_SEARCH) {
                 <div>
-                    <select>
+                    <select (change)="simpleSearchToggle($event.target)">
                         @for (
                             optionItem of availableOptions;
                             track optionItem
@@ -26,11 +55,19 @@
                         }
                     </select>
 
-                    @if (simpleSearchType === "date") {
-                        <input placeholder="Date" type="datetime-local" />
+                    @if (simpleSearchContext.typeValue === "date") {
+                        <input
+                            placeholder="Date"
+                            type="datetime-local"
+                            [(ngModel)]="simpleSearchContext.dateValue"
+                        />
                         <button>Search</button>
                     } @else {
-                        <input placeholder="Type..." type="text" />
+                        <input
+                            placeholder="Type..."
+                            type="text"
+                            [(ngModel)]="simpleSearchContext.value"
+                        />
                         <button>Search</button>
                     }
                 </div>
@@ -62,8 +99,12 @@
             }
         </table>
         <div>
-            <button>Previous page</button>
-            <button>Next page</button>
+            @if (showPreviousPageButton) {
+                <button>Previous page</button>
+            }
+            @if (showNextPageButton) {
+                <button>Next page</button>
+            }
         </div>
     } @else {
         <div class="empty-table">

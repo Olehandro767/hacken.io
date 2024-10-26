@@ -39,7 +39,7 @@ public class Web3TransactionalListenerService {
         this.web3.web3ClientVersion().send();
     }
 
-    private boolean isListenerStillListening() {
+    public boolean isListenerStillListening() {
         return this.transactionListenerContext != null && !this.transactionListenerContext.isDisposed();
     }
 

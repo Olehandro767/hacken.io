@@ -1,4 +1,4 @@
-package io.hacken.task.rest.v1.dto.request;
+package io.hacken.task.rest.v1.dto.request.transaction;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

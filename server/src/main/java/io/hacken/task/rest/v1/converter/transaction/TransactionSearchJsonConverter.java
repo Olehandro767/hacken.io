@@ -3,8 +3,7 @@ package io.hacken.task.rest.v1.converter.transaction;
 import io.hacken.task.database.dao.common.SearchOptionI;
 import static io.hacken.task.database.dao.transaction.search.AcceptedTransactionSearchByDate.findByDate;
 
-import io.hacken.task.database.dao.transaction.search.AcceptedTransactionSearchByDate;
-import io.hacken.task.rest.v1.dto.request.TransactionSearchJson;
+import io.hacken.task.rest.v1.dto.request.transaction.TransactionSearchJson;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

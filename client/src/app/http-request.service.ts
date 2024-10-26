@@ -1,7 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { complex_search, database_entity, page, simple_search } from "./types";
+import {
+  complex_search,
+  database_entity,
+  page,
+  simple_search,
+  transaction_listener_state,
+} from "./types";
 
 @Injectable({
   providedIn: "root",
@@ -31,6 +37,15 @@ export class HttpRequestService {
     return this._http.put(
       `${this.HOST_PREFIX}/api/v1/transaction/behaviour/stop`,
       this.emptyBody(),
+      {
+        headers: {},
+      },
+    );
+  }
+
+  public checkReceivingTransactionsStatus(): Observable<transaction_listener_state> {
+    return this._http.get<transaction_listener_state>(
+      `${this.HOST_PREFIX}/api/v1/transaction/behaviour/read/state`,
       {
         headers: {},
       },

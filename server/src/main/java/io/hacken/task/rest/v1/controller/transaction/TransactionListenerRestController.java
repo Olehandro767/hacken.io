@@ -1,8 +1,10 @@
 package io.hacken.task.rest.v1.controller.transaction;
 
+import io.hacken.task.rest.v1.dto.response.transaction.TransactionListenerStateRecord;
 import io.hacken.task.rest.v1.service.transaction.Web3TransactionalListenerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,9 +32,14 @@ public class TransactionListenerRestController {
     }
 
     @PutMapping("/stop")
-    private ResponseEntity<String> stop() {
+    public ResponseEntity<String> stop() {
         this.transactionalListenerService.stopTransactionListener();
         return this.transactionalListenerService.deployTransactionListener()
                 ? ok().body(OK.getReasonPhrase()) : badRequest().body("Already stopped");
+    }
+
+    @GetMapping("/read/state")
+    public ResponseEntity<TransactionListenerStateRecord> readState() {
+        return ok(new TransactionListenerStateRecord(this.transactionalListenerService.isListenerStillListening()));
     }
 }
